@@ -1,0 +1,19 @@
+{
+  "name": "backend-node",
+  "version": "0.1.0",
+  "description": "un chat como telegram pero mejor xd",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "telegram",
+    "server"
+  ],
+  "author": "Jeanpier Monserrate",
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.17.1"
+  }
+}
