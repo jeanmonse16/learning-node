@@ -1,4 +1,7 @@
 const express = require("express")
+const response = require("./network/response")
+
+
 const router = express.Router()
 
 var app = express()
@@ -9,18 +12,19 @@ app.use(router)
 
 router.get("/get", function(req, res){
     console.log(req.headers)
-    res.header({
-        "custom-header": "Nuestro servidor propio"
-    })
     console.log(req.body)
-    res.status(201).send([{
-        error: "none", body: "Añadido correctamente"
-    }])
+    response.success(req, res, "Todo salió bien")
 })
 
-router.post("/post", function(req, res){
-    res.send("hola post")
+router.post("/get", function(req, res){
+    if(req.query.error === "ok"){
+        response.error(req, res, "Error simulado", 400)
+    }else{
+        response.success(req, res, "Todo salió bien", 201)
+    }
 })
+
+app.use("/app", express.static("public"))
 
 app.listen(3000)
 
