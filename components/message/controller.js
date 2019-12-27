@@ -39,7 +39,7 @@ function updateMessage(id, message){
 function deleteMessage(id){
     return new Promise((resolve, reject) => {
         if(!id){
-            reject("No hay id indicado")
+            reject("error en el request")
             return 0
         }
         store.delete(id)
