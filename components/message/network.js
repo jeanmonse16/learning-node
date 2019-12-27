@@ -5,9 +5,14 @@ const controller = require("./controller")
 const router = express.Router()
 
 router.get("/", function(req, res){
-    console.log(req.headers)
-    console.log(req.body)
-    response.success(req, res, "Todo salió bien")
+    const filterMessages = req.query.user || null
+    controller.getMessage(filterMessages)
+      .then((messageList) => {
+        response.success(req, res, messageList, 200)
+      })
+      .catch(e => {
+        response.error(req, res, e, 500, "ha ocurrido un error")
+      })
 })
 
 router.post("/", function(req, res){
@@ -19,5 +24,17 @@ router.post("/", function(req, res){
         response.error(req, res, e, 400, "Ha ocurrido un error")
       })
    })
+
+router.patch("/:id", function(req, res){
+  console.log(req.params.id)
+
+  controller.updateMessage(req.params.id, req.body.message)
+    .then(data => {
+       response.success(req, res, data, 200)
+    })
+    .catch( e => {
+      response.error(req, res, "ERROR INTERNO", 500, e)
+    })
+})
 
 module.exports = router
