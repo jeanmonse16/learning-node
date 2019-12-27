@@ -1,14 +1,4 @@
-const db = require("mongoose")
 const Model = require("./model")
-
-//mongodb+srv://platzi:5qH0KAe1D6uXHEMv@curso-platzi-mongodb-gxkjo.mongodb.net/test?retryWrites=true&w=majority
-//la conexión a la base de datos cloud se resolvera con las promesas nativas de nodejs, en caso de dar error nos lo arrojara
-db.Promise = global.Promise
-db.connect("mongodb+srv://platzi:5qH0KAe1D6uXHEMv@curso-platzi-mongodb-gxkjo.mongodb.net", {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-})
-console.log("[db]: database connected")
 
 function addMessage(message){
     const myMessage = new Model(message)
@@ -40,8 +30,16 @@ async function updateMessage(id, message){
   return newMessage
 }
 
+async function removeMessage(id){
+    const deletedMessage = await Model.deleteOne({
+        _id: id
+    })
+    return deletedMessage
+}
+
 module.exports = {
     add: addMessage,
     list: getMessage,
-    update: updateMessage
+    update: updateMessage,
+    delete: removeMessage
 }

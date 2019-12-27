@@ -37,4 +37,14 @@ router.patch("/:id", function(req, res){
     })
 })
 
+router.delete("/:id", function(req, res){
+  controller.deleteMessage(req.params.id)
+    .then(() => {
+      response.success(req, res, `Usuario ${req.params.id} borrado con exito`, 200)
+    })
+    .catch((e) => {
+      response.error(req, res, "Ha ocurrido un error", 500, e )
+    })
+})
+
 module.exports = router

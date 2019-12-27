@@ -36,8 +36,25 @@ function updateMessage(id, message){
     })
 }
 
+function deleteMessage(id){
+    return new Promise((resolve, reject) => {
+        if(!id){
+            reject("No hay id indicado")
+            return 0
+        }
+        store.delete(id)
+          .then(() => {
+              resolve()
+          })
+          .catch(e => {
+              reject(e)
+          })
+    })
+}
+
 module.exports = {
     addMessage, 
     getMessage,
-    updateMessage
+    updateMessage,
+    deleteMessage
 }
