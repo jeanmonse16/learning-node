@@ -6,14 +6,23 @@ function createChat(users){
 }
 
 const listChat = (chats) => {
-    let filter = {}
-    if(chats){
-      filter = {
-        _id: chats
+   return new Promise((resolve, reject) => {
+      let filter = {}
+      if(chats){
+        filter = {
+          _id: chats
+        }
       }
-    }
-    const filteredChats = model.find(filter)
-    return filteredChats
+      model.find(filter)
+        .populate("users")
+        .exec((err, populated) => {
+          if(err){
+            reject(err)
+            return 0
+          }
+          resolve(populated)
+      })
+   })
 }
 
 module.exports = {

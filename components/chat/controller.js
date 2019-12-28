@@ -2,7 +2,7 @@ const store = require("./store")
 
 function createChat(users){
   return new Promise((resolve, reject) => {
-      if(!users || users < 2){
+      if(!users || users < 2 || !Array.isArray(users)){
           reject("invalid users")
           return 0
       }

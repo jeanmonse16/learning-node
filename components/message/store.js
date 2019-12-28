@@ -10,7 +10,7 @@ async function getMessage(filterUser){
         let filter = {}
         if(filterUser){
             filter = {
-              user: filterUser
+              chat: filterUser
             }
         }
         Model.find(filter)
