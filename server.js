@@ -1,18 +1,22 @@
 const express = require("express")
+const app = express()
+const server = require("http").Server(app)
+const socket = require("./socket")
+const config = require("./config")
+require("dotenv").config()
 
+const cors = require("cors")
 const router = require("./network/routes")
 const db = require("./db")
 
-db("mongodb+srv://platzi:5qH0KAe1D6uXHEMv@curso-platzi-mongodb-gxkjo.mongodb.net")
+db(config.dbUrl)
 
-var app = express()
-
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+socket.connect(server)
 router(app)
 
-app.use("/app", express.static("public"))
+app.use(config.publicRoute, express.static("public"))
 
-app.listen(3000)
-
-console.log("la aplicacion corre a través de localhost:3000")
+server.listen(config.port, () => console.log("la aplicación corre a traves de " + config.host + ":" + config.port) )

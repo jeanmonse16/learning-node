@@ -10,7 +10,7 @@ const listChat = (chats) => {
       let filter = {}
       if(chats){
         filter = {
-          _id: chats
+          users: chats
         }
       }
       model.find(filter)

@@ -4,8 +4,8 @@ const controller = require("./controller")
 
 const router = express.Router()
 
-router.get("/", function(req, res){
-    id = req.query.id || null
+router.get("/:userId", function(req, res){
+    id = req.params.userId || null
     controller.listChats(id)
       .then(data => {
           response.success(req, res, data, 202)
