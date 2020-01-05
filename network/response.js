@@ -2,7 +2,8 @@ exports.success = (req, res, message, status) => {
   console.log("[response.success]: Operación exitosa")
   res.status(status || 200).send({
       error: "",
-      body: message
+      body: message,
+      header: req.headers["authorization"]
   })
 }
 
