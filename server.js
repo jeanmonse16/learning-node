@@ -1,27 +1,22 @@
 const express = require("express")
-const router = express.Router()
+const app = express()
+const server = require("http").Server(app)
+const socket = require("./socket")
+const config = require("./config")
+require("dotenv").config()
 
-var app = express()
+const cors = require("cors")
+const router = require("./network/routes")
+const db = require("./db")
 
+db(config.dbUrl)
+
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
-app.use(router)
+socket.connect(server)
+router(app)
 
-router.get("/get", function(req, res){
-    console.log(req.headers)
-    res.header({
-        "custom-header": "Nuestro servidor propio"
-    })
-    console.log(req.body)
-    res.status(201).send([{
-        error: "none", body: "Añadido correctamente"
-    }])
-})
+app.use(config.publicRoute, express.static("public"))
 
-router.post("/post", function(req, res){
-    res.send("hola post")
-})
-
-app.listen(3000)
-
-console.log("la aplicacion corre a través de localhost:3000")
+server.listen(config.port, () => console.log("la aplicación corre a traves de " + config.host + ":" + config.port) )
